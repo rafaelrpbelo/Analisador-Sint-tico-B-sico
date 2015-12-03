@@ -37,13 +37,15 @@ class Parser
   def process
     std_message('Start process')
     comando
+    fail 'Nothing processed!' unless run?
     std_message('End process')
     token_list
   end
 
   private
 
-  attr_reader :token_position, :current_token, :debug
+  attr_reader :tokens, :token_position, :current_token, :debug, :run
+  alias_method :run?, :run
 
   # COMANDO
   def comando
@@ -70,6 +72,7 @@ class Parser
         raise_error
       end
       out_no_terminals('condicional > if')
+      run!
     end
   end
 
@@ -85,6 +88,7 @@ class Parser
       else
         raise_error
       end
+      run!
     elsif current_token == 'repeat'
       prox_token
       comando
@@ -95,6 +99,7 @@ class Parser
       else
         raise_error
       end
+      run!
     end
   end
 
@@ -113,6 +118,7 @@ class Parser
         raise_error
       end
       out_no_terminals('atribuicao > id')
+      run!
     end
   end
 
@@ -128,6 +134,9 @@ class Parser
         out_no_terminals('expressao > number > +-')
       end
       out_no_terminals('expressao > number')
+      run!
+    else
+      raise_error
     end
   end
 
@@ -160,7 +169,11 @@ class Parser
     tokens[token_position]
   end
 
-  # Helper messages
+  def run!
+    @run = true
+  end
+
+  # HELPER MESSAGES
   def std_message(msg = '')
     puts "== #{msg} ==" if @debug
   end
