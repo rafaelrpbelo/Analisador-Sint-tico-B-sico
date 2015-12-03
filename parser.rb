@@ -196,6 +196,7 @@ TEXT
 puts "\n>>> Init program <<<\n"
 program = Main.new(exemplo_iterativo, debug: true)
 program = Parser.new(exemplo_iterativo)
+puts
 program.process
 puts "\n>>> End program <<<\n"
 
