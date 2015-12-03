@@ -19,8 +19,8 @@
 # EXPRESSÃO   -> num | num + EXPRESSÃO | num – EXPRESSÃOESSÃO
 
 
-class Main
   attr_reader :tokens
+class Parser
 
   def initialize(tokens_params, options = {})
     if ARGV[0].nil? || ARGV[0].empty?
@@ -195,6 +195,7 @@ TEXT
 
 puts "\n>>> Init program <<<\n"
 program = Main.new(exemplo_iterativo, debug: true)
+program = Parser.new(exemplo_iterativo)
 program.process
 puts "\n>>> End program <<<\n"
 
