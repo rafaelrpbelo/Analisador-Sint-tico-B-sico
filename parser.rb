@@ -39,6 +39,7 @@ class Parser
     std_message('Start process')
     comando
     std_message('End process')
+    token_list
   end
 
   private
@@ -172,6 +173,12 @@ class Parser
   def out_no_terminals(msg = '')
     puts "-> OUT: #{msg}" if @debug
   end
+
+  def token_list
+    puts "\n== TOKENS =="
+    puts tokens.inspect
+    puts
+  end
 end
 
 # PROCESS:
@@ -199,10 +206,4 @@ program = Parser.new(exemplo_iterativo)
 puts
 program.process
 puts "\n>>> End program <<<\n"
-
-# Testes
-puts "\n\n=== Tokens ===\n"
-puts program.tokens.inspect
-
-puts
 
