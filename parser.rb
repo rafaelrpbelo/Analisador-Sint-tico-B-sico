@@ -19,9 +19,7 @@
 # EXPRESSÃO   -> num | num + EXPRESSÃO | num – EXPRESSÃOESSÃO
 
 
-class Main
-  attr_reader :tokens
-
+class Parser
   def initialize(tokens_params, options = {})
     if ARGV[0].nil? || ARGV[0].empty?
       @tokens = format_tokens(tokens_params)
@@ -31,7 +29,8 @@ class Main
 
     @token_position = 0
     @current_token = @tokens[@token_position]
-    @debug = options[:debug]
+    @debug = options[:debug] || ARGV.include?('--debug')
+    @run = false
   end
 
   # Main function
