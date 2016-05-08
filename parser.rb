@@ -63,7 +63,7 @@ class Parser
       prox_token
       expressao
 
-      if current_token == 'then'
+    elsif current_token == 'then'
         in_no_terminals('condicional > then')
         prox_token
         comando
@@ -78,22 +78,17 @@ class Parser
 
   # ITERATIVO -> while EXPRESSÃO do COMANDO | repeat COMANDO until EXPRESSÃO
   def iterativo
-    if current_token == 'while'
+    case
+    when current_token == 'while'
       prox_token
       expressao
-
-      if current_token == 'do'
+    when current_token == 'do'
         prox_token
         comando
-      else
-        raise_error
-      end
-      run!
-    elsif current_token == 'repeat'
+    when current_token == 'repeat'
       prox_token
       comando
-
-      if current_token == 'until'
+    when current_token == 'until'
         prox_token
         expressao
       else
@@ -142,13 +137,13 @@ class Parser
 
   # HELPERS
 
-  def format_tokens(tokens_params)
-    tokens_params.
-      strip.
+  def format_tokens(tokens_params,strip)
+    @tokens_params = tokens_params
+      @strip = strip
       split(/\s{1,}/)
   end
 
-  def prox_token
+  def prox_token(current_token)
     increment_token_position
     @current_token = tokens[token_position]
   end
@@ -217,4 +212,3 @@ program = Parser.new(exemplo_iterativo)
 puts
 program.process
 puts "\n>>> End program <<<\n"
-
